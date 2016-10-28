@@ -25,7 +25,7 @@ export default class Ball {
             // going right
 
             // determine if ball at or past right paddle's' left edge
-            const inRightEnd = this.x >= paddle2.x;
+            const inRightEnd = (this.x + this.radius) >= paddle2.x;
 
             // if past right paddle reverse x direction
             if (inRightEnd) {
@@ -50,7 +50,7 @@ export default class Ball {
             // going left
 
             // determine if ball is at or past left paddle right edge
-            const inLeftEnd = this.x <= paddle1.x + paddle1.width;
+            const inLeftEnd = (this.x - this.radius) <= paddle1.x + paddle1.width;
 
             // if past lest paddle reverse x direction
             if (inLeftEnd) {
@@ -79,7 +79,7 @@ export default class Ball {
         const hitRight = this.x >= this.boardWidth;
         const hitLeft = this.x - this.radius <= 0;
         const hitTop = this.y - this.radius <= 0;
-        const hitBottom = this.y >= this.boardHeight;
+        const hitBottom = (this.y + this.radius) >= this.boardHeight;
 
         if (hitLeft || hitRight) {
             this.vx *= -1;

@@ -43,7 +43,7 @@ export default class Game {
 
 		this.p1 = new Paddle(this.boardHeight, 5, 'white', player1Keys);
 		this.p2 = new Paddle(this.boardHeight, this.boardWidth - 10, 'white', player2Keys);
-        this.ball = new Ball(this.boardHeight, this.boardWidth, 'white');
+        this.ball = new Ball(this.boardHeight, this.boardWidth, 'red');
 	}
 
 	render() {
