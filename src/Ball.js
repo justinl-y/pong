@@ -2,11 +2,11 @@ export default class Ball {
     constructor(boardHeight, boardWidth, colour) {
         this.boardHeight = boardHeight;
         this.boardWidth = boardWidth;
-        this.x = this.boardWidth / 2; //150;
         this.y = this.boardHeight / 2; //50;
+        this.x = this.boardWidth / 2; //150;
         this.colour = colour;
-        this.vx = 1;
         this.vy = 1;
+        this.vx = 1; //Math.floor(Math.random() * 12 - 6);
         this.speed = 5;
         this.radius = 4;
     }
@@ -27,11 +27,13 @@ export default class Ball {
             const inRightEnd = paddle2.x <= this.x + this.boardWidth && paddle2.x > this.x - this.vx + this.boardWidth;
 
             //console.log('paddle2.x - ' + paddle2.x + ' | this.x - ' + this.x);
-
             //console.log(inRightEnd);
 
             if (inRightEnd) {
-                const collisionDiff = this.x + this.boardWidth - paddle2.x;
+
+                console.log('in right end');
+                
+                /*const collisionDiff = this.x + this.boardWidth - paddle2.x;
                 const k = collisionDiff / this.vx;
                 const y = this.vy * k + (this.y - this.vy);
                 const hitRightPaddle = y >= paddle2.y && y + this.boardHeight <= paddle2.y + paddle2.height;
@@ -40,24 +42,29 @@ export default class Ball {
                     this.x = paddle2.x - this.boardWidth;
                     this.y = Math.floor(this.y - this.vy + this.vy * k);
                     this.vx = -this.vx;
-                }
+                }*/
             }
         } else {
             // going left
-
+            //if paddle-x position + paddle width >= ball x position - ball is past paddle
             const inLeftEnd = paddle1.x + paddle1.width >= this.x;
 
-            //console.log('paddle1.x - ' + paddle1.x + ' | this.x - ' + this.x);
-            //console.log(inLeftEnd);
-
             if (inLeftEnd) {
-                const collisionDiff = paddle1.x + paddle1.width - this.x;
-                const k = collisionDiff / -this.vx;
+                //console.log('in left end');
+                //console.log('ball-y: ' + this.y + ' paddle1-y: ' + paddle1.y + ' paddle1-height: ' + (paddle1.y + paddle1.height));
+                //console.log('ball-x: ' + this.x + ' left-edge paddle-1: ' + (paddle1.x + paddle1.width));
+               
+                if (this.y >= paddle1.y && this.y <= (paddle1.y + paddle1.height)) {
+                    //console.log('paddle hit');
+                    this.vx *= -1;
+                }
+
+                /*const collisionDiff = paddle1.x + paddle1.width - this.x;
+                const k = collisionDiff / - this.vx;
                 const y = this.vy * k + (this.y - this.vy);
                 const hitLeftPaddle = y >= paddle1.y && (y + this.boardHeight) <= (paddle1.y + paddle1.height);
 
-                console.log('collisionDiff: ' + collisionDiff + ' | k: ' + k + ' | y: ' + y);
-
+                //console.log('collisionDiff: ' + collisionDiff + ' | k: ' + k + ' | y: ' + y);
 
                 //console.log(hitLeftPaddle);
 
@@ -65,7 +72,7 @@ export default class Ball {
                     this.x = paddle1.x + paddle1.width;
                     this.y = Math.floor(this.y - this.vy + this.vy * k);
                     this.vx = -this.vx;
-                }
+                }*/
             }
         }
 
