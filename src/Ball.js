@@ -19,7 +19,93 @@ export default class Ball {
         context.closePath();
     }
 
-    render(context) {
+    //paddle collision with ball
+    paddleCollision(paddle1, paddle2) {
+        if (this.vx > 0) {
+            // going right
+
+            const inRightEnd = paddle2.x <= this.x + this.boardWidth && paddle2.x > this.x - this.vx + this.boardWidth;
+
+            //console.log('paddle2.x - ' + paddle2.x + ' | this.x - ' + this.x);
+
+            //console.log(inRightEnd);
+
+            if (inRightEnd) {
+                const collisionDiff = this.x + this.boardWidth - paddle2.x;
+                const k = collisionDiff / this.vx;
+                const y = this.vy * k + (this.y - this.vy);
+                const hitRightPaddle = y >= paddle2.y && y + this.boardHeight <= paddle2.y + paddle2.height;
+
+                if (hitRightPaddle) {
+                    this.x = paddle2.x - this.boardWidth;
+                    this.y = Math.floor(this.y - this.vy + this.vy * k);
+                    this.vx = -this.vx;
+                }
+            }
+        } else {
+            // going left
+
+            const inLeftEnd = paddle1.x + paddle1.width >= this.x;
+
+            //console.log('paddle1.x - ' + paddle1.x + ' | this.x - ' + this.x);
+            //console.log(inLeftEnd);
+
+            if (inLeftEnd) {
+                const collisionDiff = paddle1.x + paddle1.width - this.x;
+                const k = collisionDiff / -this.vx;
+                const y = this.vy * k + (this.y - this.vy);
+                const hitLeftPaddle = y >= paddle1.y && (y + this.boardHeight) <= (paddle1.y + paddle1.height);
+
+                console.log('collisionDiff: ' + collisionDiff + ' | k: ' + k + ' | y: ' + y);
+
+
+                //console.log(hitLeftPaddle);
+
+                if (hitLeftPaddle) {
+                    this.x = paddle1.x + paddle1.width;
+                    this.y = Math.floor(this.y - this.vy + this.vy * k);
+                    this.vx = -this.vx;
+                }
+            }
+        }
+
+        //this.draw(context);
+    }
+
+    /*paddleCollision(paddle1, paddle2) {
+        if (this.vx > 0) {
+            const inRightEnd = paddle2.x <= this.x + this.width && paddle2.x > this.x - this.vx + this.width;
+
+            if (inRightEnd) {
+                const collisionDiff = this.x + this.width - paddle2.x;
+                const k = collisionDiff / this.vx;
+                const y = this.vy * k + (this.y - this.vy);
+                const hitRightPaddle = y >= paddle2.y && y + this.height <= paddle2.y + paddle2.height;
+                if (hitRightPaddle) {
+                    this.x = paddle2.x - this.width;
+                    this.y = Math.floor(this.y - this.vy + this.vy * k);
+                    this.vx = -this.vx;
+                }
+            }
+        } else {
+            const inLeftEnd = paddle1.x + paddle1.width >= this.x;
+            if (inLeftEnd) {
+                const collisionDiff = paddle1.x + paddle1.width - this.x;
+                const k = collisionDiff / -this.vx;
+                const y = this.vy * k + (this.y - this.vy);
+                const hitLeftPaddle = y >= paddle1.y && y + this.height <= paddle1.y + paddle1.height;
+
+                if (hitLeftPaddle) {
+                    this.x = paddle1.x + paddle1.width;
+                    this.y = Math.floor(this.y - this.vy + this.vy * k);
+                    this.vx = -this.vx;
+                }
+            }
+        }
+    }*/
+
+    //render(context) {
+    render(context, paddle1, paddle2) {
         const hitRight = this.x >= this.boardWidth;
         const hitLeft = this.x - this.radius <= 0;
         const hitTop = this.y - this.radius <= 0;
@@ -35,6 +121,8 @@ export default class Ball {
 
         this.x += this.vx;
         this.y += this.vy;
+
+        this.paddleCollision(paddle1, paddle2);
 
         this.draw(context);
     }
