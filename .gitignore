@@ -1,0 +1,7 @@
+node_modules
+DS_Store
+build/*.js
+build/*.json
+build/fonts
+.vscode
+.idea
