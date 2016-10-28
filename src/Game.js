@@ -46,8 +46,6 @@ export default class Game {
 		this.board.render(this.context);
         this.p1.render(this.context);
         this.p2.render(this.context);
-
-        //this.ball.render(this.context);
 		this.ball.render(this.context, this.p1, this.p2);
 	}
 }
