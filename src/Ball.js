@@ -31,6 +31,8 @@ export default class Ball {
             if (inRightEnd) {
                 if (this.y >= paddle2.y && this.y <= (paddle2.y + paddle2.height)) {
                     this.vx *= -1;
+                } else {
+                    //calc score
                 }
 
                 /*const collisionDiff = this.x + this.boardWidth - paddle2.x;
@@ -55,6 +57,8 @@ export default class Ball {
                 if (this.y >= paddle1.y && this.y <= (paddle1.y + paddle1.height)) {
                     //console.log('paddle hit');
                     this.vx *= -1;
+                } else {
+                    //calc store
                 }
 
                 /*const collisionDiff = paddle1.x + paddle1.width - this.x;
