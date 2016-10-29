@@ -15,8 +15,9 @@ export default class Game {
 		// create game board
         this.board = new Board(this.boardHeight, this.boardWidth);
 
-		this.p1Scoreboard = new Scoreboard(this.boardWidth, -10, 'end');
-		this.p2Scoreboard = new Scoreboard(this.boardWidth, 10, 'start');
+		// create player score boards
+		this.p1Scoreboard = new Scoreboard(this.boardWidth, -10, 'end', 0);
+		this.p2Scoreboard = new Scoreboard(this.boardWidth, 10, 'start', 0);
 
 		// create paddle objects
 		this.p1 = new Paddle(this.boardHeight, 5, 'white', player1Keys);
@@ -35,6 +36,6 @@ export default class Game {
         this.p1.render(this.context);
         this.p2.render(this.context);
 
-		this.ball.render(this.context, this.p1, this.p2);
+		this.ball.render(this.context, this.p1, this.p2, this.p1Scoreboard, this.p2Scoreboard);
 	}
 }

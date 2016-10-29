@@ -1,9 +1,9 @@
 export default class Scoreboard {
-   constructor(boardWidth, offSet, alignment) {
+   constructor(boardWidth, offSet, alignment, score) {
       this.boardWidth = boardWidth;
       this.offSet = offSet;
       this.alignment = alignment;
-      this.score = '00';
+      this.score = score;
    }
 
     draw(context) {

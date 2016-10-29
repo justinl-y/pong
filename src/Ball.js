@@ -4,8 +4,8 @@ export default class Ball {
         this.boardWidth = boardWidth;
         this.y = 0; //this.boardHeight / 2;
         this.x = 0; //this.boardWidth / 2;
-        this.vy = 1;
-        this.vx = 1; //Math.floor(Math.random() * 12 - 6); //1
+        this.vy = 0;
+        this.vx = 0; //Math.floor(Math.random() * 12 - 6); //1
         //this.speed = 10;
         this.radius = 4;
         this.colour = colour;
@@ -24,6 +24,8 @@ export default class Ball {
     reset() {
         this.x = this.boardWidth / 2;
         this.y = this.boardHeight / 2;
+        this.vy = 1;
+        this.vx = 1;
 
         if (Math.random() > 0.5) {
             this.vx *= -1;
@@ -44,7 +46,7 @@ export default class Ball {
     }*/
 
     //paddle collision with ball
-    paddleCollision(paddle1, paddle2) {
+    paddleCollision(paddle1, paddle2, p1Scoreboard, p2Scoreboard) {
         if (this.vx > 0) {
             // going right
 
@@ -57,7 +59,7 @@ export default class Ball {
                     this.vx *= -1;
                 } else {
                     if (this.x === this.boardWidth) {
-                        //score
+                        p1Scoreboard.score += 1;
 
                         this.reset();
                     }
@@ -89,6 +91,8 @@ export default class Ball {
                     //console.log(this.x - this.radius);
 
                     if (this.x - this.radius === -4) {
+                        p2Scoreboard.score += 1;
+
                         this.reset();
                     }
                 }
@@ -107,9 +111,9 @@ export default class Ball {
         }
     }
 
-    render(context, paddle1, paddle2) {
-        const hitRight = this.x + this.radius >= this.boardWidth;
-        const hitLeft = this.x - this.radius <= 0;
+    render(context, paddle1, paddle2, p1Scoreboard, p2Scoreboard) {
+        //const hitRight = this.x + this.radius >= this.boardWidth;
+        //const hitLeft = this.x - this.radius <= 0;
         const hitTop = this.y - this.radius <= 0;
         const hitBottom = (this.y + this.radius) >= this.boardHeight;
 
@@ -124,7 +128,7 @@ export default class Ball {
         this.y += this.vy;
 
         //this.score(p1Score, p2Score);
-        this.paddleCollision(paddle1, paddle2);
+        this.paddleCollision(paddle1, paddle2, p1Scoreboard, p2Scoreboard);
         this.draw(context);
     }
 }

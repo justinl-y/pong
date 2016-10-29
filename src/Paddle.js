@@ -11,9 +11,9 @@ export default class Paddle {
         document.addEventListener('keydown', event => this.keyListener(event));
     }
 
-    wallBounce() {
+    //wallBounce() {
 
-    }
+    //}
 
     keyListener(event) {
         switch(event.keyCode) {
