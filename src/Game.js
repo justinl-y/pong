@@ -15,15 +15,8 @@ export default class Game {
 		// create game board
         this.board = new Board(this.boardHeight, this.boardWidth);
 
-		// create score board objects
-
-		//(this.boardWidth / 2) / 2
-
-		const middleOfBoard = this.boardWidth / 2;
-		//const quarterOfBoard = this.boardWidth / 4;
-
-		this.p1Scoreboard = new Scoreboard(middleOfBoard - 10, 10, 'end');
-		this.p2Scoreboard = new Scoreboard(middleOfBoard + 10, 10, 'start');
+		this.p1Scoreboard = new Scoreboard(this.boardWidth, -10, 'end');
+		this.p2Scoreboard = new Scoreboard(this.boardWidth, 10, 'start');
 
 		// create paddle objects
 		this.p1 = new Paddle(this.boardHeight, 5, 'white', player1Keys);

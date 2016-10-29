@@ -31,7 +31,11 @@ export default class Ball {
             this.vx = -1;
         }
 
-        this.vy = 1;
+        if (Math.random() > 0.5) {
+            this.vy = 1;
+        } else {
+            this.vy = -1;
+        }
     }
 
     /*score(p1Score, p2Score) {
@@ -57,7 +61,9 @@ export default class Ball {
                 if (this.y >= paddle2.y && this.y <= (paddle2.y + paddle2.height)) {
                     this.vx *= -1;
                 } else {
-                    this.reset();
+                    if (this.x === this.boardWidth) {
+                        this.reset();
+                    }
                 }
 
                 /*const collisionDiff = this.x + this.boardWidth - paddle2.x;
@@ -83,7 +89,11 @@ export default class Ball {
                     //console.log('paddle hit');
                     this.vx *= -1;
                 } else {
-                    this.reset();
+                    //console.log(this.x - this.radius);
+
+                    if (this.x - this.radius === -4) {
+                        this.reset();
+                    }
                 }
 
                 /*const collisionDiff = paddle1.x + paddle1.width - this.x;
@@ -101,14 +111,14 @@ export default class Ball {
     }
 
     render(context, paddle1, paddle2) {
-        const hitRight = this.x + this.radius>= this.boardWidth;
+        const hitRight = this.x + this.radius >= this.boardWidth;
         const hitLeft = this.x - this.radius <= 0;
         const hitTop = this.y - this.radius <= 0;
         const hitBottom = (this.y + this.radius) >= this.boardHeight;
 
-        if (hitLeft || hitRight) {
-            this.vx *= -1;
-        }
+        //if (hitLeft || hitRight) {
+            //this.vx *= -1;
+        //}
         if (hitBottom || hitTop) {
             this.vy *= -1;
         }
