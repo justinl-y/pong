@@ -9,6 +9,7 @@ export default class Ball {
         this.vx = 1; //Math.floor(Math.random() * 12 - 6); //1
         this.speed = 5;
         this.radius = 4;
+        //this.reset();
     }
 
     draw(context) {
@@ -18,6 +19,30 @@ export default class Ball {
         context.fill();
         context.closePath();
     }
+
+    //reset ball
+    reset() {
+        this.x = this.boardWidth / 2;
+        this.y = this.boardHeight / 2;
+
+        if (Math.random() > 0.5) {
+            this.vx = 1;
+        } else {
+            this.vx = -1;
+        }
+
+        this.vy = 1;
+    }
+
+    /*score(p1Score, p2Score) {
+        if (this.x <= 0 + this.radius) {
+            this.reset();
+            p1Score.score++;
+        } else if (this.x >= game.width) {
+            this.reset();
+            p2Score.score++;
+        }
+    }*/
 
     //paddle collision with ball
     paddleCollision(paddle1, paddle2) {
@@ -32,7 +57,7 @@ export default class Ball {
                 if (this.y >= paddle2.y && this.y <= (paddle2.y + paddle2.height)) {
                     this.vx *= -1;
                 } else {
-                    //calc score
+                    this.reset();
                 }
 
                 /*const collisionDiff = this.x + this.boardWidth - paddle2.x;
@@ -58,7 +83,7 @@ export default class Ball {
                     //console.log('paddle hit');
                     this.vx *= -1;
                 } else {
-                    //calc store
+                    this.reset();
                 }
 
                 /*const collisionDiff = paddle1.x + paddle1.width - this.x;
@@ -76,7 +101,7 @@ export default class Ball {
     }
 
     render(context, paddle1, paddle2) {
-        const hitRight = this.x >= this.boardWidth;
+        const hitRight = this.x + this.radius>= this.boardWidth;
         const hitLeft = this.x - this.radius <= 0;
         const hitTop = this.y - this.radius <= 0;
         const hitBottom = (this.y + this.radius) >= this.boardHeight;
@@ -84,7 +109,6 @@ export default class Ball {
         if (hitLeft || hitRight) {
             this.vx *= -1;
         }
-
         if (hitBottom || hitTop) {
             this.vy *= -1;
         }
@@ -92,6 +116,7 @@ export default class Ball {
         this.x += this.vx;
         this.y += this.vy;
 
+        //this.score(p1Score, p2Score);
         this.paddleCollision(paddle1, paddle2);
         this.draw(context);
     }

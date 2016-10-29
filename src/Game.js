@@ -25,7 +25,7 @@ export default class Game {
 }*/
 
 import Board from './Board';
-import ScoreBoard from './Scoreboard';
+import Scoreboard from './Scoreboard';
 import Paddle from './Paddle';
 import { player1Keys, player2Keys } from './keys';
 import Ball from './Ball';
@@ -36,10 +36,13 @@ export default class Game {
 		this.boardHeight = canvas.height;
 		this.boardWidth = canvas.width;
 		this.context = canvas.getContext('2d'); //context
-
+ 
+		// create game board
         this.board = new Board(this.boardHeight, this.boardWidth);
 
-		this.scoreBoard = new ScoreBoard();
+		// create
+		this.p1Scoreboard = new Scoreboard( ( this.boardWidth / 2 ) / 2, this.boardHeight / 2 );
+		this.p2Scoreboard = new Scoreboard( ( this.boardWidth / 2 ) , this.boardHeight / 2 );
 
 		this.p1 = new Paddle(this.boardHeight, 5, 'white', player1Keys);
 		this.p2 = new Paddle(this.boardHeight, this.boardWidth - 10, 'white', player2Keys);
@@ -49,7 +52,8 @@ export default class Game {
 	render() {
 		this.board.render(this.context);
 
-		this.scoreBoard.render(this.context);
+		this.p1Scoreboard.render(this.context);
+		this.p2Scoreboard.render(this.context);
 
         this.p1.render(this.context);
         this.p2.render(this.context);
