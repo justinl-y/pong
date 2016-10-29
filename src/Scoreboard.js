@@ -1,13 +1,16 @@
 export default class Scoreboard {
-   constructor(x, y) {
+   constructor(x, y, alignment) {
       this.x = x;
       this.y = y;
-      this.score = 0;
+      this.alignment = alignment;
+      this.score = '00';
    }
 
     draw(context) {
         context.font = "30px Helvetica";
-        context.fillText(this.x, this.y, this.score);
+        context.textAlign = this.alignment;
+        context.textBaseline = 'top';
+        context.fillText(this.score, this.x, this.y);
     }
 
    render(context) {
