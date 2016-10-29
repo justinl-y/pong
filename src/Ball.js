@@ -2,14 +2,14 @@ export default class Ball {
     constructor(boardHeight, boardWidth, colour) {
         this.boardHeight = boardHeight;
         this.boardWidth = boardWidth;
-        this.y = this.boardHeight / 2;
-        this.x = this.boardWidth / 2;
-        this.colour = colour;
+        this.y = 0; //this.boardHeight / 2;
+        this.x = 0; //this.boardWidth / 2;
         this.vy = 1;
         this.vx = 1; //Math.floor(Math.random() * 12 - 6); //1
-        this.speed = 5;
+        //this.speed = 10;
         this.radius = 4;
-        //this.reset();
+        this.colour = colour;
+        this.reset();
     }
 
     draw(context) {
@@ -26,15 +26,10 @@ export default class Ball {
         this.y = this.boardHeight / 2;
 
         if (Math.random() > 0.5) {
-            this.vx = 1;
-        } else {
-            this.vx = -1;
+            this.vx *= -1;
         }
-
         if (Math.random() > 0.5) {
-            this.vy = 1;
-        } else {
-            this.vy = -1;
+            this.vy *= -1;
         }
     }
 
@@ -62,6 +57,8 @@ export default class Ball {
                     this.vx *= -1;
                 } else {
                     if (this.x === this.boardWidth) {
+                        //score
+
                         this.reset();
                     }
                 }
