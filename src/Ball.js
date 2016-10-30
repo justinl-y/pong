@@ -35,15 +35,24 @@ export default class Ball {
         }
     }
 
-    /*score(p1Score, p2Score) {
-        if (this.x <= 0 + this.radius) {
-            this.reset();
-            p1Score.score++;
-        } else if (this.x >= game.width) {
-            this.reset();
-            p2Score.score++;
+    ballCollisionSound(soundSelect) {
+        let sound;
+
+        switch (soundSelect) {
+            case 'paddle':
+                sound = new Audio('../sounds/pong-01.wav');
+                sound.play();
+                break;
+            case 'wall':
+                sound = new Audio('../sounds/pong-03.wav');
+                sound.play();
+                break;
+            case 'score':
+                sound = new Audio('../sounds/pong-02.wav');
+                sound.play();
+                break;
         }
-    }*/
+    }
 
     //paddle collision with ball
     paddleCollision(paddle1, paddle2, p1Scoreboard, p2Scoreboard) {
@@ -53,12 +62,16 @@ export default class Ball {
             // determine if ball at or past right paddle's' left edge
             const inRightEnd = (this.x + this.radius) >= paddle2.x;
 
-            // if past right paddle reverse x direction
+            // if past right paddle reverse x direction if paddle hit. Score if not
             if (inRightEnd) {
                 if (this.y >= paddle2.y && this.y <= (paddle2.y + paddle2.height)) {
+                    this.ballCollisionSound('paddle');
+
                     this.vx *= -1;
                 } else {
                     if (this.x === this.boardWidth) {
+                        this.ballCollisionSound('score');
+
                         p1Scoreboard.score += 1;
 
                         this.reset();
@@ -86,11 +99,12 @@ export default class Ball {
             if (inLeftEnd) {
                 if (this.y >= paddle1.y && this.y <= (paddle1.y + paddle1.height)) {
                     //console.log('paddle hit');
+                    this.ballCollisionSound('paddle');
                     this.vx *= -1;
                 } else {
-                    //console.log(this.x - this.radius);
-
                     if (this.x - this.radius === -4) {
+                        this.ballCollisionSound('score');
+
                         p2Scoreboard.score += 1;
 
                         this.reset();
@@ -121,6 +135,8 @@ export default class Ball {
             //this.vx *= -1;
         //}
         if (hitBottom || hitTop) {
+            this.ballCollisionSound('wall');
+
             this.vy *= -1;
         }
 
