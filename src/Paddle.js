@@ -1,21 +1,15 @@
-import { gameSettings } from './settings';
-
 export default class Paddle {
-    constructor(boardHeight, x, colour, keys) {
+    constructor(boardHeight, x, colour, keys, width, height, speed) {
         this.boardHeight = boardHeight;
-        this.width = 5;
-        this.height = 50;
-        this.speed = 5;
+        this.width = width;
+        this.height = height;
+        this.speed = speed;
         this.colour = colour;
         this.x = x;
         this.y = (boardHeight / 2) - (this.height / 2);
         this.keys = keys;
         document.addEventListener('keydown', event => this.keyListener(event));
     }
-
-    //wallBounce() {
-
-    //}
 
     keyListener(event) {
         switch(event.keyCode) {

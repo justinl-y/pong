@@ -1,14 +1,14 @@
+import { gameSettings } from './settings';
+import { player1Keys, player2Keys } from './keys';
 import Board from './Board';
 import Scoreboard from './Scoreboard';
 import Paddle from './Paddle';
 import Ball from './Ball';
-import { player1Keys, player2Keys } from './keys';
-import { gameSettings } from './settings';
 
 export default class Game {
-	constructor(id) {
-		const canvas = document.getElementById(id);
-		this.numberOfBalls = 2;//gameSettings.ballNumber;
+	constructor(gameID) {
+		const canvas = document.getElementById(gameID);
+		this.numberOfBalls = gameSettings.ballNumber;
 
 		this.boardHeight = canvas.height;
 		this.boardWidth = canvas.width;
@@ -22,17 +22,34 @@ export default class Game {
 		this.p2Scoreboard = new Scoreboard(this.boardWidth, 10, 'start', 0, 0);
 
 		// create paddle objects
-		this.p1 = new Paddle(this.boardHeight, 5, gameSettings.player1Colour, player1Keys);
-		this.p2 = new Paddle(this.boardHeight, this.boardWidth - 10, gameSettings.player2Colour, player2Keys);
+		this.p1 = new Paddle(this.boardHeight,
+								5,
+								gameSettings.player1Colour,
+								player1Keys,
+								gameSettings.paddleWidth,
+								gameSettings.paddleHeight,
+								gameSettings.paddleSpeed);
+
+		this.p2 = new Paddle(this.boardHeight,
+								this.boardWidth - (5 + gameSettings.paddleWidth),
+								gameSettings.player2Colour,
+								player2Keys,
+								gameSettings.paddleWidth,
+								gameSettings.paddleHeight,
+								gameSettings.paddleSpeed);
 
 		// create ball object
 		/*for( let i = 1; i <= this.numberOfBalls; i++ ) {
 			let ballName = 'ball' + i;
-
 			this.ballName = new Ball(this.boardHeight, this.boardWidth, 'red');
 		}*/
 
-        this.ball = new Ball(this.boardHeight, this.boardWidth, gameSettings.ballColour);
+        this.ball = new Ball(this.boardHeight, 
+								this.boardWidth, 
+								gameSettings.ballColour, 
+								gameSettings.initialBallVY, 
+								gameSettings.initialBallVX, 
+								gameSettings.ballSpeed);
 	}
 
 	render() {
@@ -48,7 +65,6 @@ export default class Game {
 			let ballName = 'ball' + i;
 
 			//console.log(ballName);
-
 			//this.ballName.render(this.context, this.p1, this.p2, this.p1Scoreboard, this.p2Scoreboard);
 		}
 

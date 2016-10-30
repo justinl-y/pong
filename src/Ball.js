@@ -1,31 +1,30 @@
-import { gameSettings } from './settings';
-
 export default class Ball {
-    constructor(boardHeight, boardWidth, colour) {
+    constructor(boardHeight, boardWidth, colour, initialVY, initialVX, initialSpeed) {
         this.boardHeight = boardHeight;
         this.boardWidth = boardWidth;
         this.colour = colour;
-        this.vy = gameSettings.initialBallVY; //Math.floor(Math.random() * 12 - 6);
-        this.vx = gameSettings.initialBallVX; //(7 - Math.abs(this.vy));
-        this.speed = gameSettings.ballSpeed;
+        this.initialVY = initialVY;
+        this.initialVX = initialVX;
+        this.speed = initialSpeed;
+
+        this.vy = this.initialVY; //Math.floor(Math.random() * 12 - 6);
+        this.vx = this.initialVX; //(7 - Math.abs(this.vy));
         this.y = this.boardHeight / 2;
         this.x = this.boardWidth / 2;
         this.radius = 4;
     }
 
-    //reset ball
     reset() {
-        this.speed *= 0.5;
+        //this.speed *= 0.5;
 
         this.x = this.boardWidth / 2;
         this.y = this.boardHeight / 2;
-        this.vy = 1; //Math.floor(Math.random() * 12 - 6);
-        this.vx = 1; //(7 - Math.abs(this.vy));
+        this.vy = this.initialVY; //Math.floor(Math.random() * 12 - 6);
+        this.vx = this.initialVX; //(7 - Math.abs(this.vy));
         
         if (Math.random() > 0.5) {
             this.vx *= -1; 
         }
-
         if (Math.random() > 0.5) {
             this.vy *= -1;
         }
@@ -117,7 +116,7 @@ export default class Ball {
 
     respondPaddleMiss(scoreBoard) {
         this.ballCollisionSound('score');
-        scoreBoard.score += 1;
+        scoreBoard.score++;
         this.reset();
     }
 

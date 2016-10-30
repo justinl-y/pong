@@ -20,8 +20,6 @@ export default class Scoreboard {
         context.textAlign = this.alignment;
         context.textBaseline = 'top';
         context.fillText(this.game + '-' + this.score, x, y);
-
-        //console.log(this.score);
     }
 
    render(context) {

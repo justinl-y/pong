@@ -1,13 +1,16 @@
 import './game.css';
+import { gameSettings } from './settings';
 import Game from './Game';
-//import Paddle from './Paddle';
+import Paddle from './Paddle';
+import Ball from './Ball';
 
-const id = 'game';
-let game = new Game(id);
-const ms = 30;
+const gameID = gameSettings.gameID;
+const animationMS = gameSettings.animationMS;
+
+let game = new Game(gameID);
 
 // self invoking function
 (function gameLoop() {
 	game.render();
-   	setTimeout(window.requestAnimationFrame(gameLoop), ms);
+   	setTimeout(window.requestAnimationFrame(gameLoop), animationMS);
 }());
