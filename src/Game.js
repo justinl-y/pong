@@ -6,91 +6,71 @@ import Paddle from './Paddle';
 import Ball from './Ball';
 
 export default class Game {
-	constructor(gameID) {
-		const canvas = document.getElementById(gameID);
-		this.numberOfBalls = gameSettings.ballNumber;
+	constructor(gameID, canvas) {
+		this.canvas = canvas;
+		this.context = this.canvas.getContext('2d');
+		this.boardHeight = this.canvas.height;
+		this.boardWidth = this.canvas.width;
+		this.board;
+		this.scoreboards = [];
+		this.paddles = [];
+		this.balls = [];;
+	}
 
-		this.boardHeight = canvas.height;
-		this.boardWidth = canvas.width;
-		this.context = canvas.getContext('2d');
- 
-		// create game board
-        this.board = new Board(this.boardHeight, this.boardWidth);
+	createBoard(context, boardHeight, boardWidth) {
+		this.board = new Board(context, boardHeight, boardWidth);
+	}
 
-		// create player score boards
-		this.p1Scoreboard = new Scoreboard(this.boardWidth, -10, 'end', 0, 0);
-		this.p2Scoreboard = new Scoreboard(this.boardWidth, 10, 'start', 0, 0);
+	createScoreboard(context, boardWidth, offSet, alignment, game, score) {
+		let scoreboardName = 'scoreboard' + this.scoreboards.length;
 
-		// create paddle objects
-		this.p1 = new Paddle(this.boardHeight,
-								5,
-								gameSettings.player1Colour,
-								player1Keys,
-								gameSettings.paddleWidth,
-								gameSettings.paddleHeight,
-								gameSettings.paddleSpeed);
+		this.scoreboardName = new Scoreboard(context, boardWidth, offSet, alignment, game, score);
+		this.scoreboards.push(this.scoreboardName);
+	}
 
-		this.p2 = new Paddle(this.boardHeight,
-								this.boardWidth - (5 + gameSettings.paddleWidth),
-								gameSettings.player2Colour,
-								player2Keys,
-								gameSettings.paddleWidth,
-								gameSettings.paddleHeight,
-								gameSettings.paddleSpeed);
+	createPaddle(context, boardHeight, x, colour, paddleWidth, paddleHeight, speed, keys) {
+		let paddledName = 'Paddle' + this.paddles.length;
 
-		// create ball object
-		/*for( let i = 1; i <= this.numberOfBalls; i++ ) {
-			let ballName = 'ball' + i;
-			this.ballName = new Ball(this.boardHeight, this.boardWidth, 'red');
-		}*/
-
-        this.ball = new Ball(this.boardHeight, 
-								this.boardWidth, 
-								gameSettings.ballColour, 
-								gameSettings.initialBallVY, 
-								gameSettings.initialBallVX, 
-								gameSettings.ballSpeed);
-		this.balls = [];
-		this.createBalls(2);
-		console.log(this.balls);
+		this.paddleName = new Paddle(context, boardHeight, x, colour, paddleWidth, paddleHeight, speed, keys);
+		this.paddles.push(this.paddleName);
 	}
 
 	createBalls(numberOfBalls) {
-		for( let i = 0; i < this.numberOfBalls; i++ ) {
+		for ( let i = 0 ; i < numberOfBalls ; i++ ) {
 			let ballName = 'ball' + i;
 
 			this.ballName = new Ball(this.boardHeight, 
-								this.boardWidth, 
-								gameSettings.ballColour, 
-								gameSettings.initialBallVY, 
-								gameSettings.initialBallVX, 
-								gameSettings.ballSpeed);
+										this.boardWidth, 
+										gameSettings.ballColour, 
+										gameSettings.initialBallVY, 
+										gameSettings.initialBallVX, 
+										gameSettings.ballSpeed);
 
 			this.balls.push(this.ballName);			
 		}
 	}
 
 	render() {
+		// board
 		this.board.render(this.context);
 
-		this.p1Scoreboard.render(this.context);
-		this.p2Scoreboard.render(this.context);
-
-        this.p1.render(this.context);
-        this.p2.render(this.context);
-
-		for ( let i = 0; i < this.balls.length; i++ ) {
-			this.balls[i].render(this.context,
-									this.p1,
-									this.p2,
-									this.p1Scoreboard,
-									this.p2Scoreboard);
+		//scoreboards
+		for ( let i = 0; i < this.scoreboards.length; i++ ) {
+			this.scoreboards[i].render();
 		}
 
-		/*this.ball.render(this.context,
-							this.p1,
-							this.p2,
-							this.p1Scoreboard,
-							this.p2Scoreboard);*/
+		// paddles
+		for ( let i = 0; i < this.paddles.length; i++ ) {
+			this.paddles[i].render();
+		}
+
+		// balls
+		for ( let i = 0; i < this.balls.length; i++ ) {
+			this.balls[i].render(this.context,
+									this.scoreboards[0],
+									this.scoreboards[1],
+									this.paddles[0],
+									this.paddles[1]);
+		}
 	}
 }
