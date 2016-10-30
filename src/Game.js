@@ -16,8 +16,8 @@ export default class Game {
         this.board = new Board(this.boardHeight, this.boardWidth);
 
 		// create player score boards
-		this.p1Scoreboard = new Scoreboard(this.boardWidth, -10, 'end', 0);
-		this.p2Scoreboard = new Scoreboard(this.boardWidth, 10, 'start', 0);
+		this.p1Scoreboard = new Scoreboard(this.boardWidth, -10, 'end', 0, 0);
+		this.p2Scoreboard = new Scoreboard(this.boardWidth, 10, 'start', 0, 0);
 
 		// create paddle objects
 		this.p1 = new Paddle(this.boardHeight, 5, 'white', player1Keys);
