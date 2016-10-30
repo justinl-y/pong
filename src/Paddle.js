@@ -1,3 +1,5 @@
+import { gameSettings } from './settings';
+
 export default class Paddle {
     constructor(boardHeight, x, colour, keys) {
         this.boardHeight = boardHeight;

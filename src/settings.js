@@ -1,5 +1,7 @@
 export const gameSettings = {
-    player1Colour: 'white',
-    player2Colour: 'white',
+    player1Colour: 'yellow',
+    player2Colour: 'green',
     ballColour: 'red',
+    ballNumber: 1,
+    ballSpeed: 1,
 };

@@ -1,29 +1,33 @@
+import { gameSettings } from './settings';
+
 export default class Ball {
     constructor(boardHeight, boardWidth, colour) {
         this.boardHeight = boardHeight;
         this.boardWidth = boardWidth;
-        this.y = 0; //this.boardHeight / 2;
-        this.x = 0; //this.boardWidth / 2;
-        this.vy = 0;
-        this.vx = 0; //Math.floor(Math.random() * 12 - 6); //1
-        //this.speed = 10;
+        this.y = this.boardHeight / 2;
+        this.x = this.boardWidth / 2;
+        this.vy = 1; //Math.floor(Math.random() * 12 - 6);
+        this.vx = 1; //(7 - Math.abs(this.vy));
         this.radius = 4;
         this.colour = colour;
-        this.reset();
+
+        this.speed = gameSettings.ballSpeed;
+
+        //this.reset();
     }
 
     //reset ball
     reset() {
         this.x = this.boardWidth / 2;
         this.y = this.boardHeight / 2;
-        this.vy = 1;//Math.floor(Math.random() * 12 - 6);
+        this.vy = 1; //Math.floor(Math.random() * 12 - 6);
         this.vx = 1; //(7 - Math.abs(this.vy));
 
         if (Math.random() > 0.5) {
-            this.vx *= -1;
+            this.vx *= -1 * this.speed;
         }
         if (Math.random() > 0.5) {
-            this.vy *= -1;
+            this.vy *= -1 * this.speed;
         }
     }
 
@@ -77,6 +81,9 @@ export default class Ball {
                         if (this.x === this.boardWidth) {
                             this.ballCollisionSound('score');
                             p1Scoreboard.score += 1;
+
+                            //this.speed++;
+
                             this.reset();
                         }
                     }
@@ -110,6 +117,9 @@ export default class Ball {
                         if (this.x === 0) {
                             this.ballCollisionSound('score');
                             p2Scoreboard.score += 1;
+
+                            //this.speed++;
+
                             this.reset();
                         }
                     }
@@ -137,7 +147,6 @@ export default class Ball {
         //}
         if (hitBottom || hitTop) {
             this.ballCollisionSound('wall');
-
             this.vy *= -1;
         }
 
