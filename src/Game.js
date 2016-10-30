@@ -50,6 +50,7 @@ export default class Game {
 								gameSettings.initialBallVY, 
 								gameSettings.initialBallVX, 
 								gameSettings.ballSpeed);
+		this.balls = [];						
 	}
 
 	render() {
