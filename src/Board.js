@@ -25,30 +25,4 @@ export default class Board {
     render() {
         this.drawBoard();
    }
-
-   /*constructor(boardHeight, boardWidth) {
-        this.boardHeight = boardHeight;
-        this.boardWidth = boardWidth;
-    }
-
-    drawLine(context) {
-        context.fillStyle = 'white';
-		context.setLineDash([10, 10]);
-		context.beginPath();
-		context.moveTo(this.boardWidth / 2, 0);
-		context.lineTo(this.boardWidth / 2, this.boardHeight);
-		context.strokeStyle = "white";
-		context.stroke();
-   }
-
-   drawBoard(context) {
-	   //context.fillStyle = 'red';
-	   //context.fillRect(0, 0, this.boardWidth, this.boardHeight)
-       context.clearRect(0, 0, this.boardWidth, this.boardHeight);
-	   this.drawLine(context);
-   }
-
-    render(context) {
-        this.drawBoard(context);
-   }*/
 }
