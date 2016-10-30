@@ -1,9 +1,9 @@
 export const gameSettings = {
     gameID: 'game',
     animationMS: 30,
-    player1Colour: 'white',
-    player2Colour: 'white',
-    ballColour: 'white',
+    player1Colour: 'yellow',
+    player2Colour: 'green',
+    ballColour: 'red',
     ballNumber: 2,
     ballSpeed: 1,
     initialBallVX: 1,

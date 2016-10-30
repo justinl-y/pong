@@ -7,7 +7,7 @@ export default class Ball {
         this.initialVX = initialVX;
         this.speed = initialSpeed;
 
-        this.vy = this.initialVY; //Math.floor(Math.random() * 12 - 6);
+        this.vy = Math.floor(Math.random() * 12 - 6); //this.initialVY;
         this.vx = this.initialVX; //(7 - Math.abs(this.vy));
         this.y = this.boardHeight / 2;
         this.x = this.boardWidth / 2;

@@ -50,7 +50,24 @@ export default class Game {
 								gameSettings.initialBallVY, 
 								gameSettings.initialBallVX, 
 								gameSettings.ballSpeed);
-		this.balls = [];						
+		this.balls = [];
+		this.createBalls(2);
+		console.log(this.balls);
+	}
+
+	createBalls(numberOfBalls) {
+		for( let i = 0; i < this.numberOfBalls; i++ ) {
+			let ballName = 'ball' + i;
+
+			this.ballName = new Ball(this.boardHeight, 
+								this.boardWidth, 
+								gameSettings.ballColour, 
+								gameSettings.initialBallVY, 
+								gameSettings.initialBallVX, 
+								gameSettings.ballSpeed);
+
+			this.balls.push(this.ballName);			
+		}
 	}
 
 	render() {
@@ -62,13 +79,18 @@ export default class Game {
         this.p1.render(this.context);
         this.p2.render(this.context);
 
-		for( var i = 1; i <= this.numberOfBalls; i++ ) {
-			let ballName = 'ball' + i;
-
-			//console.log(ballName);
-			//this.ballName.render(this.context, this.p1, this.p2, this.p1Scoreboard, this.p2Scoreboard);
+		for ( let i = 0; i < this.balls.length; i++ ) {
+			this.balls[i].render(this.context,
+									this.p1,
+									this.p2,
+									this.p1Scoreboard,
+									this.p2Scoreboard);
 		}
 
-		this.ball.render(this.context, this.p1, this.p2, this.p1Scoreboard, this.p2Scoreboard);
+		/*this.ball.render(this.context,
+							this.p1,
+							this.p2,
+							this.p1Scoreboard,
+							this.p2Scoreboard);*/
 	}
 }
