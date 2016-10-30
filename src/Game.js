@@ -9,8 +9,6 @@ export default class Game {
 	constructor(gameID, canvas) {
 		this.canvas = canvas;
 		this.context = this.canvas.getContext('2d');
-		this.boardHeight = this.canvas.height;
-		this.boardWidth = this.canvas.width;
 		this.board;
 		this.scoreboards = [];
 		this.paddles = [];
@@ -35,12 +33,13 @@ export default class Game {
 		this.paddles.push(this.paddleName);
 	}
 
-	createBalls(numberOfBalls) {
+	createBalls(context, boardHeight, boardWidth, numberOfBalls) {
 		for ( let i = 0 ; i < numberOfBalls ; i++ ) {
 			let ballName = 'ball' + i;
 
-			this.ballName = new Ball(this.boardHeight, 
-										this.boardWidth, 
+			this.ballName = new Ball(context,
+										boardHeight, 
+										boardWidth, 
 										gameSettings.ballColour, 
 										gameSettings.initialBallVY, 
 										gameSettings.initialBallVX, 
@@ -52,7 +51,7 @@ export default class Game {
 
 	render() {
 		// board
-		this.board.render(this.context);
+		this.board.render();
 
 		//scoreboards
 		for ( let i = 0; i < this.scoreboards.length; i++ ) {
@@ -66,8 +65,7 @@ export default class Game {
 
 		// balls
 		for ( let i = 0; i < this.balls.length; i++ ) {
-			this.balls[i].render(this.context,
-									this.scoreboards[0],
+			this.balls[i].render(this.scoreboards[0],
 									this.scoreboards[1],
 									this.paddles[0],
 									this.paddles[1]);

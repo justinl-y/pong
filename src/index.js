@@ -2,8 +2,8 @@ import './game.css';
 import { gameSettings } from './settings';
 import { player1Keys, player2Keys } from './keys';
 import Game from './Game';
-import Paddle from './Paddle';
-import Ball from './Ball';
+//import Paddle from './Paddle';
+//import Ball from './Ball';
 
 const gameID = gameSettings.gameID;
 const animationMS = gameSettings.animationMS;
@@ -20,7 +20,7 @@ game.createScoreboard(context, boardWidth, -10, 'end', 0, 0);
 game.createScoreboard(context, boardWidth, 10, 'start', 0, 0);
 game.createPaddle(context, boardHeight, 5, gameSettings.player1Colour, gameSettings.paddleWidth, gameSettings.paddleHeight, gameSettings.paddleSpeed, player1Keys);
 game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), gameSettings.player2Colour, gameSettings.paddleWidth, gameSettings.paddleHeight, gameSettings.paddleSpeed, player2Keys);
-game.createBalls(numberOfBalls);
+game.createBalls(context, boardHeight, boardWidth, numberOfBalls);
 
 // call self invoking function to run game
 (function gameLoop() {
