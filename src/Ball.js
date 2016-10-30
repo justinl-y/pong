@@ -9,7 +9,7 @@ export default class Ball {
         this.speed = initialSpeed;
 
         this.vy = Math.floor(Math.random() * 6 - 3); 
-        this.vx = this.initialVX; //(7 - Math.abs(this.vy)); 
+        this.vx = this.initialVY; //(7 - Math.abs(this.vy)); 
         this.y = this.boardHeight / 2;
         this.x = this.boardWidth / 2;
         this.radius = 4;
@@ -20,8 +20,8 @@ export default class Ball {
 
         this.x = this.boardWidth / 2;
         this.y = this.boardHeight / 2;
-        this.vy = this.initialVY; //Math.floor(Math.random() * 12 - 6);
-        this.vx = this.initialVX; //(7 - Math.abs(this.vy));
+        this.vy = Math.floor(Math.random() * 12 - 6);
+        this.vx = this.initialVY; //(7 - Math.abs(this.vy));
         
         if (Math.random() > 0.5) {
             this.vx *= -1; 
