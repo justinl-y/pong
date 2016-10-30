@@ -15,6 +15,7 @@ const boardWidth = canvas.width;
 let numberOfBalls = gameSettings.ballNumberInitial;
 let paddleColourIndex = gameSettings.paddleColourInitial;
 let paddleColour = gameSettings.paddleColours[paddleColourIndex];
+let paddleHeight = gameSettings.paddleHeight;
 
 // create game
 const game = new Game(gameID, canvas);
@@ -25,93 +26,95 @@ game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidt
 game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, gameSettings.paddleHeight, gameSettings.paddleSpeed, player2Keys);
 game.createBalls(context, boardHeight, boardWidth, numberOfBalls);
 
-let player1Score = 0;
-let player2Score = 0;
-
 // call self invoking function to run game
 (function gameLoop() {
 	game.render();
    	setTimeout(window.requestAnimationFrame(gameLoop), animationMS);
 
-	player1Score = game.scoreboards[0].score;
-	player2Score = game.scoreboards[1].score;
+	let playerScoreAverage = Math.max(game.scoreboards[0].score, game.scoreboards[1].score);
+	let playerGameAverage = Math.max(game.scoreboards[0].game, game.scoreboards[1].game);
 
-	//console.log(Math.max(player1Score, player2Score));
+	//console.log(playerGameAverage);
 
-
-	//if ( Math.max(player1Score, player2Score) > numberOfBalls ) {
-		//numberOfBalls = Math.max(player1Score, player2Score);
-
-		//game.createBall(context, boardHeight, boardWidth);
-		//numberOfBalls += 2;
-
-		let playerAverage = Math.max(player1Score, player2Score);
-
-		//console.log(playerAverage);
-
-		switch (playerAverage) {
-			case 0:
-			case 1:
-				console.log('should be 1');
-				while (game.balls.length < 1) {
-					game.createBall(context, boardHeight, boardWidth);
-				}
-				break;
-			case 2:
-			case 3:
-				console.log('should be 2');
-				while (game.balls.length < 2) {
-					game.createBall(context, boardHeight, boardWidth);
-				}
-				break;
-			case 4:
-			case 5:
-				console.log('should be 3');
-				while (game.balls.length < 3) {
-					game.createBall(context, boardHeight, boardWidth);
-				}
-				break;
-			case 6:
-			case 7:
-				console.log('should be 4');
-				while (game.balls.length < 4) {
-					game.createBall(context, boardHeight, boardWidth);
-				}
-				break;
-			case 8:
-			case 9:
-				console.log('should be 5');
-				while (game.balls.length < 5) {
-					game.createBall(context, boardHeight, boardWidth);
-				}
-				break;
-			default:
-				game.balls = [];
+	// change balls and paddle size with score
+	switch (playerScoreAverage) {
+		case 0:
+		case 1:
+			//console.log('should be 1');
+			while (game.balls.length < 1) {
 				game.createBall(context, boardHeight, boardWidth);
-		}
-
-		console.log(game.balls.length);
-
-
-
-		/*if (Math.max(player1Score, player2Score) > 9) {
+			}
+			break;
+		case 2:
+		case 3:
+			//console.log('should be 2');
+			while (game.balls.length < 2) {
+				game.createBall(context, boardHeight, boardWidth);
+			}
+			break;
+		case 4:
+		case 5:
+			//console.log('should be 3');
+			while (game.balls.length < 3) {
+				game.createBall(context, boardHeight, boardWidth);
+			}
+			break;
+		case 6:
+		case 7:
+			//console.log('should be 4');
+			while (game.balls.length < 4) {
+				game.createBall(context, boardHeight, boardWidth);
+			}
+			break;
+		case 8:
+		case 9:
+			//console.log('should be 5');
+			while (game.balls.length < 5) {
+				game.createBall(context, boardHeight, boardWidth);
+			}
+			break;
+		default:
+			game.balls = [];
+		
 			paddleColourIndex++;
 
-			//console.log(paddleColourIndex);
+			switch (playerGameAverage) {
+				case 1:
+					paddleColour = gameSettings.paddleColours[paddleColourIndex];
+					paddleHeight = (gameSettings.paddleHeight / 100) * 80;
 
-			paddleColour = gameSettings.paddleColours[paddleColourIndex];
+					game.paddles = [];
+					game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player1Keys);
+					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
+					break;
+				case 2:
+					paddleColour = gameSettings.paddleColours[paddleColourIndex];
+					paddleHeight = (gameSettings.paddleHeight / 100) * 70;
 
-			game.paddles = [];
-			game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidth, gameSettings.paddleHeight, gameSettings.paddleSpeed, player1Keys);
-			game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, gameSettings.paddleHeight, gameSettings.paddleSpeed, player2Keys);
-		}*/
+					game.paddles = [];
+					game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player1Keys);
+					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
+					break;
+				case 3:
+					paddleColour = gameSettings.paddleColours[paddleColourIndex];
+					paddleHeight = (gameSettings.paddleHeight / 100) * 60;
 
-		//if (numberOfBalls > 10) {
+					game.paddles = [];
+					game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player1Keys);
+					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
+					break;
+				case 4:
+					paddleColour = gameSettings.paddleColours[paddleColourIndex];
+					paddleHeight = (gameSettings.paddleHeight / 100) * 50;
 
-		//}
-		//console.log(numberOfBalls);
-	//}
+					game.paddles = [];
+					game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player1Keys);
+					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
+					break;
+				default:
+					//game won 
+			}
 
-	
-	//console.log('player1Score: ' + player1Score + 'player2Score: ' + player2Score);
+			game.createBall(context, boardHeight, boardWidth);
+		}
 }());
