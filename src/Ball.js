@@ -4,30 +4,30 @@ export default class Ball {
     constructor(boardHeight, boardWidth, colour) {
         this.boardHeight = boardHeight;
         this.boardWidth = boardWidth;
+        this.colour = colour;
+        this.vy = gameSettings.initialBallVY; //Math.floor(Math.random() * 12 - 6);
+        this.vx = gameSettings.initialBallVX; //(7 - Math.abs(this.vy));
+        this.speed = gameSettings.ballSpeed;
         this.y = this.boardHeight / 2;
         this.x = this.boardWidth / 2;
-        this.vy = 1; //Math.floor(Math.random() * 12 - 6);
-        this.vx = 1; //(7 - Math.abs(this.vy));
         this.radius = 4;
-        this.colour = colour;
-
-        this.speed = gameSettings.ballSpeed;
-
-        //this.reset();
     }
 
     //reset ball
     reset() {
+        this.speed *= 0.5;
+
         this.x = this.boardWidth / 2;
         this.y = this.boardHeight / 2;
         this.vy = 1; //Math.floor(Math.random() * 12 - 6);
         this.vx = 1; //(7 - Math.abs(this.vy));
+        
+        if (Math.random() > 0.5) {
+            this.vx *= -1; 
+        }
 
         if (Math.random() > 0.5) {
-            this.vx *= -1 * this.speed;
-        }
-        if (Math.random() > 0.5) {
-            this.vy *= -1 * this.speed;
+            this.vy *= -1;
         }
     }
 
@@ -49,7 +49,7 @@ export default class Ball {
                 break;
         }
     }
-
+    
     //paddle collision with ball
     paddleCollision(paddle1, paddle2, p1Scoreboard, p2Scoreboard) {
         if (this.vx > 0) {
@@ -64,27 +64,18 @@ export default class Ball {
                 //going up
                 if (this.vy > 0) {
                     if ( ((this.y + this.radius) >= paddle2.y && (this.y + this.radius) <= (paddle2.y + paddle2.height)) && this.x <= paddle2.x ) {
-                        this.ballCollisionSound('paddle');
-                        this.vx *= -1;
+                        this.respondPaddleHit();
                     } else {
                         if (this.x === this.boardWidth) {
-                            this.ballCollisionSound('score');
-                            p1Scoreboard.score += 1;
-                            this.reset();
+                            this.respondPaddleMiss(p1Scoreboard);
                         }
                     }
                 } else {
                     if ( ((this.y - this.radius) >= paddle2.y && (this.y - this.radius) <= (paddle2.y + paddle2.height)) && this.x <= paddle2.x ) {
-                        this.ballCollisionSound('paddle');
-                        this.vx *= -1;
+                        this.respondPaddleHit();
                     } else {
                         if (this.x === this.boardWidth) {
-                            this.ballCollisionSound('score');
-                            p1Scoreboard.score += 1;
-
-                            //this.speed++;
-
-                            this.reset();
+                            this.respondPaddleMiss(p1Scoreboard);
                         }
                     }
                 }
@@ -100,32 +91,34 @@ export default class Ball {
                 // going up
                 if (this.vy > 0) {
                     if ( ((this.y + this.radius) >= paddle1.y && (this.y + this.radius) <= (paddle1.y + paddle1.height)) && this.x >= (paddle1.x + paddle1.width) ) {
-                        this.ballCollisionSound('paddle');
-                        this.vx *= -1;
+                        this.respondPaddleHit();
                     } else {
                         if (this.x === 0) {
-                            this.ballCollisionSound('score');
-                            p2Scoreboard.score += 1;
-                            this.reset();
+                            this.respondPaddleMiss(p2Scoreboard);
                         }
                     }
                 } else {
                     if ( ((this.y - this.radius) >= paddle1.y && (this.y - this.radius) <= (paddle1.y + paddle1.height)) && this.x >= (paddle1.x + paddle1.width)) {
-                        this.ballCollisionSound('paddle');
-                        this.vx *= -1;
+                        this.respondPaddleHit();
                     } else {
                         if (this.x === 0) {
-                            this.ballCollisionSound('score');
-                            p2Scoreboard.score += 1;
-
-                            //this.speed++;
-
-                            this.reset();
+                            this.respondPaddleMiss(p2Scoreboard);
                         }
                     }
                 }
             }
         }
+    }
+
+    respondPaddleHit() {
+        this.ballCollisionSound('paddle');
+        this.vx *= -1;
+    }
+
+    respondPaddleMiss(scoreBoard) {
+        this.ballCollisionSound('score');
+        scoreBoard.score += 1;
+        this.reset();
     }
 
     draw(context) {
