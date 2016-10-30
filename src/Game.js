@@ -27,7 +27,7 @@ export default class Game {
 	}
 
 	createPaddle(context, boardHeight, x, colour, paddleWidth, paddleHeight, speed, keys) {
-		let paddledName = 'Paddle' + this.paddles.length;
+		let paddledName = 'paddle' + this.paddles.length;
 
 		this.paddleName = new Paddle(context, boardHeight, x, colour, paddleWidth, paddleHeight, speed, keys);
 		this.paddles.push(this.paddleName);
@@ -37,7 +37,7 @@ export default class Game {
 		for ( let i = 0 ; i < numberOfBalls ; i++ ) {
 			let ballName = 'ball' + i;
 
-			this.ballName = new Ball(context,
+			/*this.ballName = new Ball(context,
 										boardHeight, 
 										boardWidth, 
 										gameSettings.ballColour, 
@@ -45,8 +45,23 @@ export default class Game {
 										gameSettings.initialBallVX, 
 										gameSettings.ballSpeed);
 
-			this.balls.push(this.ballName);			
+			this.balls.push(this.ballName);*/
+			this.createBall(context, boardHeight, boardWidth);
 		}
+	}
+
+	createBall(context, boardHeight, boardWidth) {
+		let balldName = 'ball' + this.balls.length;
+
+		this.ballName = new Ball(context,
+								boardHeight,
+								boardWidth,
+								gameSettings.ballColour,
+								gameSettings.initialBallVY,
+								gameSettings.initialBallVX,
+								gameSettings.ballSpeed);
+
+		this.balls.push(this.ballName);
 	}
 
 	render() {

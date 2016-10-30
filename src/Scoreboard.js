@@ -12,10 +12,13 @@ export default class Scoreboard {
         const x = (this.boardWidth / 2) + this.offSet;
         const y = 10;
 
-        if (this.score > 10) {
+        if (this.score > 9) {
             this.score = 0;
             this.game++;
+
+            //shrink paddle and go to one ball
         }
+
 
         this.context.font = "30px Helvetica";
         this.context.textAlign = this.alignment;

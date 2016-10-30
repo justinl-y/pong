@@ -8,8 +8,8 @@ export default class Ball {
         this.initialVX = initialVX;
         this.speed = initialSpeed;
 
-        this.vy = Math.floor(Math.random() * 12 - 6); //this.initialVY;
-        this.vx = this.initialVX; //(7 - Math.abs(this.vy));
+        this.vy = Math.floor(Math.random() * 6 - 3); 
+        this.vx = this.initialVX; //(7 - Math.abs(this.vy)); 
         this.y = this.boardHeight / 2;
         this.x = this.boardWidth / 2;
         this.radius = 4;
@@ -117,7 +117,9 @@ export default class Ball {
 
     respondPaddleMiss(scoreBoard) {
         this.ballCollisionSound('score');
+
         scoreBoard.score++;
+
         this.reset();
     }
 
