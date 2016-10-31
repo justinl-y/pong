@@ -12,11 +12,6 @@ export default class Scoreboard {
         const x = (this.boardWidth / 2) + this.offSet;
         const y = 10;
 
-        /*if (this.score > 9) {
-            this.score = 0;
-            this.game++;
-        }*/
-
         this.context.font = "30px Helvetica";
         this.context.textAlign = this.alignment;
         this.context.textBaseline = 'top';
