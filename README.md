@@ -10,6 +10,7 @@ This game was developed using JavaScript ES6 and is intended to demonstrate the 
 ##### Run
 `> npm start`
 ## Keys
+
 ##### Player 1:
 * a: up
 * z: down
