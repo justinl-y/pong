@@ -5,15 +5,19 @@ A basic pong game using HTML5 Canvas. The game consists of five rounds with a pr
 This game was developed using JavaScript ES6 and is intended to demonstrate the use of classes and object-oriented programming with JavaScript.
 
 ## Setup
+
 ##### Install
 `> npm i`
+
 ##### Run
 `> npm start`
+
 ## Keys
 
 ##### Player 1:
 * a: up
 * z: down
+
 ##### Player 2:
 * ▲ : up
 * ▼: down
