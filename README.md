@@ -37,7 +37,7 @@ The project was developed using a model-view-controller design pattern with the 
 
 ## References
 
-HTML Canvas -  http://http://www.html5canvastutorials.com/
+HTML Canvas - http://www.html5canvastutorials.com/
 
 ## Known Issues
 
