@@ -1,5 +1,10 @@
 node_modules
+build/*.js
+build/*.json
+build/fonts
+
 DS_Store
 .vscode
 .idea
+
 jsconfig.json
