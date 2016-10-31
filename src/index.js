@@ -8,7 +8,7 @@ let animationMS = gameSettings.animationMS;
 let canvas = document.getElementById(gameID);
 let context = canvas.getContext('2d');
 let boardHeight = canvas.height;
-let boardWidth = canvas.width;
+let boardWidth = canvas.width;//
 
 //let numberOfBalls = gameSettings.ballNumberInitial;
 let paddleColourIndex = gameSettings.paddleColourInitial;

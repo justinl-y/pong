@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "82b99462a1047cc4cd56"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "04a9973813c4d3d497f1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -595,52 +595,142 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//import Paddle from './Paddle';
-	//import Ball from './Ball';
-
 	var gameID = _settings.gameSettings.gameID;
 	var animationMS = _settings.gameSettings.animationMS;
 	var canvas = document.getElementById(gameID);
 	var context = canvas.getContext('2d');
 	var boardHeight = canvas.height;
-	var boardWidth = canvas.width;
-	var numberOfBalls = _settings.gameSettings.ballNumber;
+	var boardWidth = canvas.width; //
+
+	//let numberOfBalls = gameSettings.ballNumberInitial;
+	var paddleColourIndex = _settings.gameSettings.paddleColourInitial;
+	var paddleColour = _settings.gameSettings.paddleColours[paddleColourIndex];
+	var paddleHeight = _settings.gameSettings.paddleHeight;
 
 	// create game
 	var game = new _Game2.default(gameID, canvas);
 	game.createBoard(context, boardHeight, boardWidth);
 	game.createScoreboard(context, boardWidth, -10, 'end', 0, 0);
 	game.createScoreboard(context, boardWidth, 10, 'start', 0, 0);
-	game.createPaddle(context, boardHeight, 5, _settings.gameSettings.player1Colour, _settings.gameSettings.paddleWidth, _settings.gameSettings.paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player1Keys);
-	game.createPaddle(context, boardHeight, boardWidth - (5 + _settings.gameSettings.paddleWidth), _settings.gameSettings.player2Colour, _settings.gameSettings.paddleWidth, _settings.gameSettings.paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player2Keys);
-	game.createBalls(context, boardHeight, boardWidth, numberOfBalls);
-
-	var player1Score = 0;
-	var player2Score = 0;
-	var ballNumberArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+	game.createPaddle(context, boardHeight, 5, paddleColour, _settings.gameSettings.paddleWidth, paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player1Keys);
+	game.createPaddle(context, boardHeight, boardWidth - (5 + _settings.gameSettings.paddleWidth), paddleColour, _settings.gameSettings.paddleWidth, paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player2Keys);
+	game.createBalls(context, boardHeight, boardWidth, _settings.gameSettings.ballNumberInitial);
 
 	// call self invoking function to run game
 	(function gameLoop() {
 		game.render();
 		setTimeout(window.requestAnimationFrame(gameLoop), animationMS);
 
-		player1Score = game.scoreboards[0].score;
-		player2Score = game.scoreboards[1].score;
+		var playerScoreAverage = Math.max(game.scoreboards[0].score, game.scoreboards[1].score);
 
-		console.log(Math.max(player1Score, player2Score));
+		// change balls and paddle size with score
+		switch (playerScoreAverage) {
+			case 0:
+			case 1:
+				while (game.balls.length < 1) {
+					game.createBall(context, boardHeight, boardWidth);
+				}
+				break;
+			case 2:
+			case 3:
+				while (game.balls.length < 2) {
+					game.createBall(context, boardHeight, boardWidth);
+				}
+				break;
+			case 4:
+			case 5:
+				while (game.balls.length < 3) {
+					game.createBall(context, boardHeight, boardWidth);
+				}
+				break;
+			case 6:
+			case 7:
+				while (game.balls.length < 4) {
+					game.createBall(context, boardHeight, boardWidth);
+				}
+				break;
+			case 8:
+			case 9:
+				while (game.balls.length < 5) {
+					game.createBall(context, boardHeight, boardWidth);
+				}
+				break;
+			default:
+				if (game.scoreboards[0].score > 9) {
+					game.scoreboards[0].game++;
+					game.scoreboards[0].score = 0;
+					game.scoreboards[1].score = 0;
+				} else if (game.scoreboards[1].score > 9) {
+					game.scoreboards[1].game++;
+					game.scoreboards[0].score = 0;
+					game.scoreboards[1].score = 0;
+				}
 
-		if (Math.max(player1Score, player2Score) > numberOfBalls) {
-			//numberOfBalls = Math.max(player1Score, player2Score);
+				var playerGameAverage = game.scoreboards[0].game + game.scoreboards[1].game;
 
-			//game.createBall(context, boardHeight, boardWidth);
+				game.balls = [];
+				paddleColourIndex++;
 
-			//if (numberOfBalls > 10) {
+				switch (playerGameAverage) {
+					case 1:
+						paddleColour = _settings.gameSettings.paddleColours[paddleColourIndex];
+						paddleHeight = _settings.gameSettings.paddleHeight / 100 * 85;
 
-			//}
-			console.log(numberOfBalls);
+						game.paddles = [];
+						game.createPaddle(context, boardHeight, 5, paddleColour, _settings.gameSettings.paddleWidth, paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player1Keys);
+						game.createPaddle(context, boardHeight, boardWidth - (5 + _settings.gameSettings.paddleWidth), paddleColour, _settings.gameSettings.paddleWidth, paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player2Keys);
+						break;
+					case 2:
+						paddleColour = _settings.gameSettings.paddleColours[paddleColourIndex];
+						paddleHeight = _settings.gameSettings.paddleHeight / 100 * 70;
+
+						game.paddles = [];
+						game.createPaddle(context, boardHeight, 5, paddleColour, _settings.gameSettings.paddleWidth, paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player1Keys);
+						game.createPaddle(context, boardHeight, boardWidth - (5 + _settings.gameSettings.paddleWidth), paddleColour, _settings.gameSettings.paddleWidth, paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player2Keys);
+						break;
+					case 3:
+						paddleColour = _settings.gameSettings.paddleColours[paddleColourIndex];
+						paddleHeight = _settings.gameSettings.paddleHeight / 100 * 55;
+
+						game.paddles = [];
+						game.createPaddle(context, boardHeight, 5, paddleColour, _settings.gameSettings.paddleWidth, paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player1Keys);
+						game.createPaddle(context, boardHeight, boardWidth - (5 + _settings.gameSettings.paddleWidth), paddleColour, _settings.gameSettings.paddleWidth, paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player2Keys);
+						break;
+					case 4:
+						paddleColour = _settings.gameSettings.paddleColours[paddleColourIndex];
+						paddleHeight = _settings.gameSettings.paddleHeight / 100 * 40;
+
+						game.paddles = [];
+						game.createPaddle(context, boardHeight, 5, paddleColour, _settings.gameSettings.paddleWidth, paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player1Keys);
+						game.createPaddle(context, boardHeight, boardWidth - (5 + _settings.gameSettings.paddleWidth), paddleColour, _settings.gameSettings.paddleWidth, paddleHeight, _settings.gameSettings.paddleSpeed, _keys.player2Keys);
+						break;
+					default:
+						var calculateWinner = function calculateWinner() {
+							if (game.scoreboards[0].game > game.scoreboards[1].game) {
+								return 'Player one is the winner.';
+							} else if (game.scoreboards[0].game < game.scoreboards[1].game) {
+								return 'Player two is the winner.';
+							} else if (game.scoreboards[0].score > game.scoreboards[1].score) {
+								return 'Player one is the winner.';
+							} else if (game.scoreboards[0].score < game.scoreboards[1].score) {
+								return 'Player two is the winner.';
+							} else {
+								return 'We have a draw.';
+							}
+						};
+
+						context.font = "20px Helvetica";
+						context.textAlign = 'center';
+						context.textBaseline = 'top';
+						context.fillText(calculateWinner(), boardWidth / 2, boardHeight / 2);
+
+						game.board = null;
+
+					/*'Greetings Professor Falken.'
+	    'A strange game.  The ony winning move is not to play.'
+	    'How about a nice game of chess?'*/
+				}
 		}
-
-		//console.log('player1Score: ' + player1Score + 'player2Score: ' + player2Score);
 	})();
 
 /***/ },
@@ -678,7 +768,7 @@
 
 
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n   margin: 0;\n   padding: 0;\n   border: 0;\n   font-size: 100%;\n   font: inherit;\n   vertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n   display: block;\n}\nbody {\n   line-height: 1;\n}\nol, ul {\n   list-style: none;\n}\nblockquote, q {\n   quotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n   content: '';\n   content: none;\n}\ntable {\n   border-collapse: collapse;\n   border-spacing: 0;\n}\n\n/* Game Styles */\n\n@font-face {\n    font-family: 'PressStart2P Web';\n    src: url(" + __webpack_require__(4) + ");\n    src: url(" + __webpack_require__(4) + "?#iefix) format('embedded-opentype'),\n         url(" + __webpack_require__(5) + ") format('woff2'),\n         url(" + __webpack_require__(6) + ") format('woff'),\n         url(" + __webpack_require__(7) + ") format('truetype'),\n         url(" + __webpack_require__(8) + "#press_start_2pregular) format('svg');\n    font-weight: normal;\n    font-style: normal;\n}\nbody {\n   font-family: 'PressStart2P Web', monospace;\n   margin: 0 auto;\n   text-align: center;\n}\nh1 {\n   margin-top: 20px;\n}\n#game {\n   background-color: black;\n   display: block;\n   height: 256px;\n   margin: 20px auto;\n   width: 512px;\n}\n.players {\n   display: inline-flex;\n   justify-content: space-between;\n   text-align: center;\n   width: 512px;\n}\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n   margin: 0;\n   padding: 0;\n   border: 0;\n   font-size: 100%;\n   font: inherit;\n   vertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n   display: block;\n}\nbody {\n   line-height: 1;\n}\nol, ul {\n   list-style: none;\n}\nblockquote, q {\n   quotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n   content: '';\n   content: none;\n}\ntable {\n   border-collapse: collapse;\n   border-spacing: 0;\n}\n\n/* Game Styles */\n\n@font-face {\n    font-family: 'PressStart2P Web';\n    src: url(" + __webpack_require__(4) + ");\n    src: url(" + __webpack_require__(4) + "?#iefix) format('embedded-opentype'),\n         url(" + __webpack_require__(5) + ") format('woff2'),\n         url(" + __webpack_require__(6) + ") format('woff'),\n         url(" + __webpack_require__(7) + ") format('truetype'),\n         url(" + __webpack_require__(8) + "#press_start_2pregular) format('svg');\n    font-weight: normal;\n    font-style: normal;\n}\nbody {\n   font-family: 'PressStart2P Web', monospace;\n   margin: 0 auto;\n   text-align: center;\n}\nh1 {\n   margin-top: 20px;\n}\n#game {\n   background-color: black;\n   display: block;\n   width: 50%;\n   height: auto;\n   margin: 20px auto;\n}\n.players {\n   display: inline-flex;\n   justify-content: space-between;\n   text-align: center;\n   width: 50%;\n}", ""]);
 
 	// exports
 
@@ -1033,16 +1123,16 @@
 	var gameSettings = exports.gameSettings = {
 	    gameID: 'game',
 	    animationMS: 30,
-	    player1Colour: 'yellow',
-	    player2Colour: 'green',
-	    ballColour: 'red',
-	    ballNumber: 1,
+	    ballColour: 'white',
+	    ballNumberInitial: 1,
 	    ballSpeed: 1,
 	    initialBallVX: 1,
 	    initialBallVY: 1,
 	    paddleWidth: 5,
 	    paddleHeight: 50,
-	    paddleSpeed: 5
+	    paddleSpeed: 5,
+	    paddleColourInitial: 0,
+	    paddleColours: ['blue', 'green', 'yellow', 'orange', 'red']
 	};
 
 /***/ },
@@ -1139,14 +1229,6 @@
 				for (var i = 0; i < numberOfBalls; i++) {
 					var ballName = 'ball' + i;
 
-					/*this.ballName = new Ball(context,
-	    							boardHeight, 
-	    							boardWidth, 
-	    							gameSettings.ballColour, 
-	    							gameSettings.initialBallVY, 
-	    							gameSettings.initialBallVX, 
-	    							gameSettings.ballSpeed);
-	    	this.balls.push(this.ballName);*/
 					this.createBall(context, boardHeight, boardWidth);
 				}
 			}
@@ -1273,14 +1355,7 @@
 	            var x = this.boardWidth / 2 + this.offSet;
 	            var y = 10;
 
-	            if (this.score > 9) {
-	                this.score = 0;
-	                this.game++;
-
-	                //shrink paddle and go to one ball
-	            }
-
-	            this.context.font = "30px Helvetica";
+	            this.context.font = "25px Helvetica";
 	            this.context.textAlign = this.alignment;
 	            this.context.textBaseline = 'top';
 	            this.context.fillText(this.game + '-' + this.score, x, y);
@@ -1399,7 +1474,7 @@
 	        this.speed = initialSpeed;
 
 	        this.vy = Math.floor(Math.random() * 6 - 3);
-	        this.vx = this.initialVX; //(7 - Math.abs(this.vy)); 
+	        this.vx = this.initialVY; //(7 - Math.abs(this.vy)); 
 	        this.y = this.boardHeight / 2;
 	        this.x = this.boardWidth / 2;
 	        this.radius = 4;
@@ -1412,8 +1487,8 @@
 
 	            this.x = this.boardWidth / 2;
 	            this.y = this.boardHeight / 2;
-	            this.vy = this.initialVY; //Math.floor(Math.random() * 12 - 6);
-	            this.vx = this.initialVX; //(7 - Math.abs(this.vy));
+	            this.vy = Math.floor(Math.random() * 12 - 6);
+	            this.vx = this.initialVY; //(7 - Math.abs(this.vy));
 
 	            if (Math.random() > 0.5) {
 	                this.vx *= -1;
