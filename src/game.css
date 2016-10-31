@@ -71,7 +71,7 @@ h1 {
 #game {
    background-color: black;
    display: block;
-   width: 55%;
+   width: 50%;
    height: auto;
    margin: 20px auto;
 }
@@ -79,5 +79,5 @@ h1 {
    display: inline-flex;
    justify-content: space-between;
    text-align: center;
-   width: 55%;
+   width: 50%;
 }
