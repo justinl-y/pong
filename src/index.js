@@ -137,6 +137,6 @@ game.createBalls(context, boardHeight, boardWidth, gameSettings.ballNumberInitia
 					/*'Greetings Professor Falken.'
 					'A strange game.  The ony winning move is not to play.'
 					'How about a nice game of chess?'*/
+				}
 			}
-		}
 }());

@@ -71,13 +71,13 @@ h1 {
 #game {
    background-color: black;
    display: block;
-   height: 256px;
+   width: 55%;
+   height: auto;
    margin: 20px auto;
-   width: 512px;
 }
 .players {
    display: inline-flex;
    justify-content: space-between;
    text-align: center;
-   width: 512px;
+   width: 55%;
 }

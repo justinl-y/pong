@@ -12,7 +12,7 @@ export default class Scoreboard {
         const x = (this.boardWidth / 2) + this.offSet;
         const y = 10;
 
-        this.context.font = "30px Helvetica";
+        this.context.font = "25px Helvetica";
         this.context.textAlign = this.alignment;
         this.context.textBaseline = 'top';
         this.context.fillText(this.game + '-' + this.score, x, y);
