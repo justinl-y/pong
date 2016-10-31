@@ -37,15 +37,6 @@ export default class Game {
 		for ( let i = 0 ; i < numberOfBalls ; i++ ) {
 			let ballName = 'ball' + i;
 
-			/*this.ballName = new Ball(context,
-										boardHeight, 
-										boardWidth, 
-										gameSettings.ballColour, 
-										gameSettings.initialBallVY, 
-										gameSettings.initialBallVX, 
-										gameSettings.ballSpeed);
-
-			this.balls.push(this.ballName);*/
 			this.createBall(context, boardHeight, boardWidth);
 		}
 	}

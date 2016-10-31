@@ -6,7 +6,7 @@ import Game from './Game';
 //import Ball from './Ball';
 
 const gameID = gameSettings.gameID;
-const animationMS = gameSettings.animationMS;
+let animationMS = gameSettings.animationMS;
 let canvas = document.getElementById(gameID);
 let context = canvas.getContext('2d');
 const boardHeight = canvas.height;
@@ -33,42 +33,34 @@ game.createBalls(context, boardHeight, boardWidth, gameSettings.ballNumberInitia
 
 	let playerScoreAverage = Math.max(game.scoreboards[0].score, game.scoreboards[1].score);
 
-	//console.log('playerScoreAverage: ' + playerScoreAverage);
-	//console.log('playerGameAverage: ' + playerGameAverage);
-
 	// change balls and paddle size with score
 	switch (playerScoreAverage) {
 		case 0:
 		case 1:
-			//console.log('should be 1');
 			while (game.balls.length < 1) {
 				game.createBall(context, boardHeight, boardWidth);
 			}
 			break;
 		case 2:
 		case 3:
-			//console.log('should be 2');
 			while (game.balls.length < 2) {
 				game.createBall(context, boardHeight, boardWidth);
 			}
 			break;
 		case 4:
 		case 5:
-			//console.log('should be 3');
 			while (game.balls.length < 3) {
 				game.createBall(context, boardHeight, boardWidth);
 			}
 			break;
 		case 6:
 		case 7:
-			//console.log('should be 4');
 			while (game.balls.length < 4) {
 				game.createBall(context, boardHeight, boardWidth);
 			}
 			break;
 		case 8:
 		case 9:
-			//console.log('should be 5');
 			while (game.balls.length < 5) {
 				game.createBall(context, boardHeight, boardWidth);
 			}
@@ -89,11 +81,11 @@ game.createBalls(context, boardHeight, boardWidth, gameSettings.ballNumberInitia
 			game.balls = [];
 			paddleColourIndex++;
 
-			console.log(playerGameAverage);
+			//console.log(playerGameAverage);
 
 			switch (playerGameAverage) {
 				case 1:
-					console.log('level 2');
+					//console.log('level 2');
 
 					paddleColour = gameSettings.paddleColours[paddleColourIndex];
 					paddleHeight = (gameSettings.paddleHeight / 100) * 85;
@@ -103,7 +95,7 @@ game.createBalls(context, boardHeight, boardWidth, gameSettings.ballNumberInitia
 					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
 					break;
 				case 2:
-					console.log('level 3');
+					//console.log('level 3');
 
 					paddleColour = gameSettings.paddleColours[paddleColourIndex];
 					paddleHeight = (gameSettings.paddleHeight / 100) * 70;
@@ -113,7 +105,7 @@ game.createBalls(context, boardHeight, boardWidth, gameSettings.ballNumberInitia
 					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
 					break;
 				case 3:
-					console.log('level 3');
+					//console.log('level 3');
 					paddleColour = gameSettings.paddleColours[paddleColourIndex];
 					paddleHeight = (gameSettings.paddleHeight / 100) * 55;
 
@@ -122,7 +114,7 @@ game.createBalls(context, boardHeight, boardWidth, gameSettings.ballNumberInitia
 					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
 					break;
 				case 4:
-					console.log('level 4');
+					//console.log('level 4');
 					paddleColour = gameSettings.paddleColours[paddleColourIndex];
 					paddleHeight = (gameSettings.paddleHeight / 100) * 40;
 
@@ -131,9 +123,32 @@ game.createBalls(context, boardHeight, boardWidth, gameSettings.ballNumberInitia
 					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
 					break;
 				default:
-					//game won 
-			}
+					//console.log('calculate winner');
 
-			game.createBall(context, boardHeight, boardWidth);
+					function calculateWinner() {
+						if (game.scoreboards[0].game > game.scoreboards[1].game) {
+							return 'Player one is the winner.';
+						} else if (game.scoreboards[0].game < game.scoreboards[1].game) {
+							return 'Player two is the winner.';
+						} else if (game.scoreboards[0].score > game.scoreboards[1].score) {
+							return 'Player one is the winner.';
+						} else if (game.scoreboards[0].score < game.scoreboards[1].score) {
+							return 'Player two is the winner.';
+						} else {
+							return 'We have a draw.';
+						}
+					}
+
+					context.font = "20px Helvetica";
+					context.textAlign = 'center';
+					context.textBaseline = 'top';
+					context.fillText(calculateWinner(), boardWidth / 2, boardHeight/ 2);
+
+					game.board = null;
+
+					/*'Greetings Professor Falken.'
+					'A strange game.  The ony winning move is not to play.'
+					'How about a nice game of chess?'*/
+			}
 		}
 }());

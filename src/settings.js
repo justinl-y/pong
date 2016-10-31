@@ -1,8 +1,6 @@
 export const gameSettings = {
     gameID: 'game',
     animationMS: 30,
-    //player1Colour: 'yellow',
-    //player2Colour: 'green',
     ballColour: 'white',
     ballNumberInitial: 1,
     ballSpeed: 1,

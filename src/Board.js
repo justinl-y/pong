@@ -13,14 +13,14 @@ export default class Board {
 		this.context.lineTo(this.boardWidth / 2, this.boardHeight);
 		this.context.strokeStyle = "white";
 		this.context.stroke();
-   }
+    }
 
-   drawBoard() {
-	   //context.fillStyle = 'red';
-	   //context.fillRect(0, 0, this.boardWidth, this.boardHeight)
-       this.context.clearRect(0, 0, this.boardWidth, this.boardHeight);
-	   this.drawLine(this.context);
-   }
+    drawBoard() {
+	    //context.fillStyle = 'red';
+	    //context.fillRect(0, 0, this.boardWidth, this.boardHeight)
+        this.context.clearRect(0, 0, this.boardWidth, this.boardHeight);
+	    this.drawLine(this.context);
+    }
 
     render() {
         this.drawBoard();
