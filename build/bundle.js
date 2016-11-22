@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "04a9973813c4d3d497f1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f69de32187cd3c5abdd3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -600,7 +600,7 @@
 	var canvas = document.getElementById(gameID);
 	var context = canvas.getContext('2d');
 	var boardHeight = canvas.height;
-	var boardWidth = canvas.width; //
+	var boardWidth = canvas.width;
 
 	//let numberOfBalls = gameSettings.ballNumberInitial;
 	var paddleColourIndex = _settings.gameSettings.paddleColourInitial;
