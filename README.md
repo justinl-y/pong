@@ -42,3 +42,13 @@ HTML Canvas - http://www.html5canvastutorials.com/
 ## Known Issues
 
 Some issues with the ball generation algorithm is slanting the game in favour of player one.
+
+## Installation Instructions
+
+To Install
+
+> npm i
+
+To Run
+
+> npm start
