@@ -1,9 +1,9 @@
 import { gameSettings } from './settings';
 import { player1Keys, player2Keys } from './keys';
-import Board from './Board';
-import Scoreboard from './Scoreboard';
-import Paddle from './Paddle';
-import Ball from './Ball';
+import Board from './board';
+import Scoreboard from './scoreboard';
+import Paddle from './paddle';
+import Ball from './ball';
 
 export default class Game {
 	constructor(gameID, canvas) {
