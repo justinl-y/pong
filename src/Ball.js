@@ -7,7 +7,6 @@ export default class Ball {
         this.initialVY = initialVY;
         this.initialVX = initialVX;
         this.speed = initialSpeed;
-
         this.vy = Math.floor(Math.random() * 6 - 3); 
         this.vx = this.initialVY; //(7 - Math.abs(this.vy)); 
         this.y = this.boardHeight / 2;
@@ -16,13 +15,11 @@ export default class Ball {
     }
 
     reset() {
-        //this.speed *= 0.5;
-
         this.x = this.boardWidth / 2;
         this.y = this.boardHeight / 2;
         this.vy = Math.floor(Math.random() * 12 - 6);
         this.vx = this.initialVY; //(7 - Math.abs(this.vy));
-        
+
         if (Math.random() > 0.5) {
             this.vx *= -1; 
         }
@@ -31,6 +28,7 @@ export default class Ball {
         }
     }
 
+    // set game sounds
     ballCollisionSound(soundSelect) {
         let sound;
 
@@ -110,11 +108,13 @@ export default class Ball {
         }
     }
 
+    // for paddle hit
     respondPaddleHit() {
         this.ballCollisionSound('paddle');
         this.vx *= -1;
     }
 
+    // for paddle miss
     respondPaddleMiss(scoreBoard) {
         this.ballCollisionSound('score');
 
@@ -123,6 +123,7 @@ export default class Ball {
         this.reset();
     }
 
+    // draw balls
     draw() {
         this.context.fillStyle = this.colour;
         this.context.beginPath();

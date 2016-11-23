@@ -3,6 +3,7 @@ import { gameSettings } from './settings';
 import { player1Keys, player2Keys } from './keys';
 import Game from './Game';
 
+// set variables
 const gameID = gameSettings.gameID;
 let animationMS = gameSettings.animationMS;
 let canvas = document.getElementById(gameID);
@@ -10,7 +11,6 @@ let context = canvas.getContext('2d');
 let boardHeight = canvas.height;
 let boardWidth = canvas.width;
 
-//let numberOfBalls = gameSettings.ballNumberInitial;
 let paddleColourIndex = gameSettings.paddleColourInitial;
 let paddleColour = gameSettings.paddleColours[paddleColourIndex];
 let paddleHeight = gameSettings.paddleHeight;
@@ -24,6 +24,16 @@ game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidt
 game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
 game.createBalls(context, boardHeight, boardWidth, gameSettings.ballNumberInitial);
 
+// function to change paddle size on level increase
+function changeGameLevel(paddleHeight) {
+	paddleColour = gameSettings.paddleColours[paddleColourIndex];
+	paddleHeight = (gameSettings.paddleHeight / 100) * paddleHeight;
+
+	game.paddles = [];
+	game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player1Keys);
+	game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
+}
+
 // call self invoking function to run game
 (function gameLoop() {
 	game.render();
@@ -31,7 +41,7 @@ game.createBalls(context, boardHeight, boardWidth, gameSettings.ballNumberInitia
 
 	let playerScoreAverage = Math.max(game.scoreboards[0].score, game.scoreboards[1].score);
 
-	// change balls and paddle size with score
+	// change number of balls by one for every 2 games and paddle size with score
 	switch (playerScoreAverage) {
 		case 0:
 		case 1:
@@ -79,40 +89,22 @@ game.createBalls(context, boardHeight, boardWidth, gameSettings.ballNumberInitia
 			game.balls = [];
 			paddleColourIndex++;
 
+			// game levels
 			switch (playerGameAverage) {
 				case 1:
-					paddleColour = gameSettings.paddleColours[paddleColourIndex];
-					paddleHeight = (gameSettings.paddleHeight / 100) * 85;
-
-					game.paddles = [];
-					game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player1Keys);
-					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
+					changeGameLevel(85);
 					break;
 				case 2:
-					paddleColour = gameSettings.paddleColours[paddleColourIndex];
-					paddleHeight = (gameSettings.paddleHeight / 100) * 70;
-
-					game.paddles = [];
-					game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player1Keys);
-					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
+					changeGameLevel(70);
 					break;
 				case 3:
-					paddleColour = gameSettings.paddleColours[paddleColourIndex];
-					paddleHeight = (gameSettings.paddleHeight / 100) * 55;
-
-					game.paddles = [];
-					game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player1Keys);
-					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
+					changeGameLevel(55);
 					break;
 				case 4:
-					paddleColour = gameSettings.paddleColours[paddleColourIndex];
-					paddleHeight = (gameSettings.paddleHeight / 100) * 40;
-
-					game.paddles = [];
-					game.createPaddle(context, boardHeight, 5, paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player1Keys);
-					game.createPaddle(context, boardHeight, boardWidth - (5 + gameSettings.paddleWidth), paddleColour, gameSettings.paddleWidth, paddleHeight, gameSettings.paddleSpeed, player2Keys);
+					changeGameLevel(40);
 					break;
 				default:
+					// declare winner
 					function calculateWinner() {
 						if (game.scoreboards[0].game > game.scoreboards[1].game) {
 							return 'Player one is the winner.';
